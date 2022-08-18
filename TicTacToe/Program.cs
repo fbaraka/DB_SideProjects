@@ -32,6 +32,7 @@ Console.WriteLine();
 Console.WriteLine($"~-~-{playerOne} VS {playerTwo}~-~-");
 Console.WriteLine();
 
+
 // build the board
 // left variable spots for the list of empty x and o
 
@@ -52,6 +53,12 @@ boardMarks.Add(9, "9");
 
 MakeBoard(boardMarks);
 
+Console.Write("Select a spot to place your marker on! ");
+int userInput = validEntry();
+
+
+
+
 static void MakeBoard(Dictionary<int, string> _boardMarks)
 
 
@@ -66,4 +73,40 @@ static void MakeBoard(Dictionary<int, string> _boardMarks)
     Console.WriteLine($"    {_boardMarks[7]}  |  {_boardMarks[8]}  |  {_boardMarks[9]}  ");
     Console.WriteLine($"       |     |      ");
 
+}
+
+// adding our int validator 
+
+static int validEntry()
+{
+    int userNum = 0;
+    bool oneTwoThree = false;
+    do
+    {
+        bool tryagain = true;
+        while (tryagain)
+        {
+            Console.Write("Enter a number to test: ");
+            string userInput = Console.ReadLine();
+            bool vaild = int.TryParse(userInput, out userNum);
+            if (vaild)
+            {
+                tryagain = false;
+            }
+            else
+            {
+                Console.WriteLine("Please Enter a valid integer");
+            }
+        }
+        if (userNum == 1 || userNum == 2 || userNum == 3)
+        {
+            oneTwoThree = true;
+        }
+        else
+        {
+            Console.WriteLine("Pick 1, 2, or 3 you idiot.");
+        }
+    } while (!oneTwoThree);
+
+    return userNum;
 }
