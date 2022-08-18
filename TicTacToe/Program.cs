@@ -14,7 +14,7 @@ Console.WriteLine("Let's play a game of Tic Tac Toe");
     - build out conditions for winning?
         - all the combinations for player 1 to win? 
         - can think of 8 combos for winning 
-               - that is the the three verticals, three horizontals, and two diagonals 
+               - that is the three verticals, three horizontals, and two diagonals 
     - if there is a win tally it for user 1 or 2 
     - would you like to play again loop
     - show the final score. 
@@ -65,3 +65,5 @@ static void MakeBoard(Dictionary<int, string> _boardMarks)
     Console.WriteLine($"       |     |      ");
     Console.WriteLine($"    {_boardMarks[7]}  |  {_boardMarks[8]}  |  {_boardMarks[9]}  ");
     Console.WriteLine($"       |     |      ");
+
+}
