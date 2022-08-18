@@ -18,8 +18,6 @@ Console.WriteLine("Let's play a game of Tic Tac Toe");
     - if there is a win tally it for user 1 or 2 
     - would you like to play again loop
     - show the final score. 
-
-
  
  */
 
@@ -37,41 +35,78 @@ Console.WriteLine();
 // left variable spots for the list of empty x and o
 
 
-// create a list to store the x and os in
-Dictionary<int, string> boardMarks = new Dictionary<int, string>();
-boardMarks.Add(1, "1");
-boardMarks.Add(2, "2");
-boardMarks.Add(3, "3");
-boardMarks.Add(4, "4");
-boardMarks.Add(5, "5");
-boardMarks.Add(6, "6");
-boardMarks.Add(7, "7");
-boardMarks.Add(8, "8");
-boardMarks.Add(9, "9");
+// create an array to store the x and os in
+
+char[] boardMarks = { '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+
+bool gameOver = false;
+int drawCounter = 0;
+
+do
+{
+ 
+
+    Console.Clear();
+    MakeBoard(boardMarks);
+
+    bool playerOneMoveOver = false;
+    while (!playerOneMoveOver)
+    {
+        Console.Write($"{playerOne}, select a spot to place your X! ");
+        int userInput = validEntry();
+
+
+        boardMarks[userInput - 1] = 'X';
+        playerOneMoveOver = true;
+    }
+
+    drawCounter++;
+    gameOver = CheckWinningCombo(boardMarks, drawCounter);
 
 
 
-MakeBoard(boardMarks);
+    Console.Clear();
+    MakeBoard(boardMarks);
 
-Console.Write("Select a spot to place your marker on! ");
-int userInput = validEntry();
+    bool playerTwoMoveOver = false;
+    while (!playerTwoMoveOver)
+    {
+        Console.Write($"{playerTwo}, select a spot to place your O! ");
+        int userInput = validEntry();
+
+
+        boardMarks[userInput - 1] = 'O';
+        playerTwoMoveOver = true;
+    }
+
+    drawCounter++;
+    gameOver = CheckWinningCombo(boardMarks, drawCounter);
+
+
+} while (!gameOver);
 
 
 
 
-static void MakeBoard(Dictionary<int, string> _boardMarks)
+static void MakeBoard(char[] _boardMarks)
 
 
 {
+
+    Console.WriteLine("==========================================================================");
+    Console.WriteLine();
     Console.WriteLine($"       |     |      ");
-    Console.WriteLine($"    {_boardMarks[1]}  |  {_boardMarks[2]}  |  {_boardMarks[3]}  ");
+    Console.WriteLine($"    {_boardMarks[0]}  |  {_boardMarks[1]}  |  {_boardMarks[2]}  ");
     Console.WriteLine($"  _____|_____|_____ ");
     Console.WriteLine($"       |     |      ");
-    Console.WriteLine($"    {_boardMarks[4]}  |  {_boardMarks[5]}  |  {_boardMarks[6]}  ");
+    Console.WriteLine($"    {_boardMarks[3]}  |  {_boardMarks[4]}  |  {_boardMarks[5]}  ");
     Console.WriteLine($"  _____|_____|_____ ");
     Console.WriteLine($"       |     |      ");
-    Console.WriteLine($"    {_boardMarks[7]}  |  {_boardMarks[8]}  |  {_boardMarks[9]}  ");
+    Console.WriteLine($"    {_boardMarks[6]}  |  {_boardMarks[7]}  |  {_boardMarks[8]}  ");
     Console.WriteLine($"       |     |      ");
+    Console.WriteLine();
+    Console.WriteLine("==========================================================================");
+    Console.WriteLine();
 
 }
 
@@ -95,18 +130,79 @@ static int validEntry()
             }
             else
             {
-                Console.WriteLine("Please Enter a valid integer");
+                Console.WriteLine("Please enter a valid integer, dummy");
             }
         }
-        if (userNum == 1 || userNum == 2 || userNum == 3)
+        if (userNum == 1 || userNum == 2 || userNum == 3 || userNum == 4 || userNum == 5 || userNum == 6 || userNum == 7 || userNum == 8 || userNum == 9)
         {
             oneTwoThree = true;
         }
         else
         {
-            Console.WriteLine("Pick 1, 2, or 3 you idiot.");
+            Console.WriteLine("Pick 1-9 you idiot.");
         }
     } while (!oneTwoThree);
 
     return userNum;
+}
+
+
+// making a function to check results
+
+static bool CheckWinningCombo(char[] _boardMarks, int _drawCounter)
+{
+
+    while (true)
+    {
+        if ((_boardMarks[0] == _boardMarks[1]) && (_boardMarks[1] == _boardMarks[2])) // 3 horizontal win combos
+        {
+            return true;
+        }
+        else if ((_boardMarks[3] == _boardMarks[4]) && (_boardMarks[4] == _boardMarks[5]))
+        {
+            return true;
+
+        }
+        else if ((_boardMarks[6] == _boardMarks[7]) && (_boardMarks[7] == _boardMarks[8]))
+        {
+            return true;
+
+        }
+        else if ((_boardMarks[0] == _boardMarks[3]) && (_boardMarks[3] == _boardMarks[6])) // 3 vertical win combos
+        {
+            return true;
+
+        }
+        else if ((_boardMarks[1] == _boardMarks[4]) && (_boardMarks[4] == _boardMarks[7]))
+        {
+            return true;
+
+        }
+        else if ((_boardMarks[2] == _boardMarks[5]) && (_boardMarks[5] == _boardMarks[8]))
+        {
+            return true;
+
+        }
+        else if ((_boardMarks[0] == _boardMarks[4]) && (_boardMarks[4] == _boardMarks[8])) // 2 diagonal win combos
+        {
+            return true;
+
+        }
+        else if ((_boardMarks[2] == _boardMarks[4]) && (_boardMarks[4] == _boardMarks[6]))
+        {
+            return true;
+
+        }
+        else if (_drawCounter == 9)
+        {
+
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
+    }
+
 }
